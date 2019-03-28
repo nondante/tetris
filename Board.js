@@ -8,17 +8,15 @@ class Board {
   }
 
 
-  drawBoard(j,i,color){
+  drawBoard(j,i){
     
     let startingWidth = 50;
     let startingHeight = 50;
 
-
     for(i=1;i<=this.columns; i++){  
       startingWidth +=30;
       startingHeight = 50;
-      for(j=1;j<=this.rows; j++){
-        
+      for(j=1;j<=this.rows; j++){     
         startingHeight +=30;
         const space = new Space(j,i, startingWidth,startingHeight);
         space.drawSpace('black');
@@ -26,25 +24,18 @@ class Board {
         this.spaces.push(space);
       }
     }
-
   }
 
-  async moveFigures() {
+  moveFigures() {
+    
+    this.counter = this.counter + 1;
+    const figure = new Figure('zet'+this.counter);
+    figure.drawFigure();
+    const prom =  figure.moveFigure();
 
-  
-      
-      
-      this.counter = this.counter + 1;
-
-        
-        
-        const figure = new Figure('zet'+this.counter);
-        const prom =  figure.drawFigure()
-        prom.then(value => {
-          
-          this.moveFigures();
-        })
-      
+    prom.then(() => {      
+      this.moveFigures();
+    });
   }
 }
 
