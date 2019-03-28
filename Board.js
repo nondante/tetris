@@ -3,6 +3,7 @@ class Board {
     this.rows = 18;
     this.columns = 10;
     this.spaces = [];
+    this.counter = 0;
 
   }
 
@@ -28,22 +29,22 @@ class Board {
 
   }
 
-  moveFigures() {
-    const figures = ['alpha', 'beta', 'zet'];
-    const figure = new Figure(fig);
-    figures.forEach((fig)=>{
+  async moveFigures() {
+
+  
       
-      figure.drawFigure(this.spaces);
-      const el = document.getElementById(fig);
-      let offset = figure.y;
-      figure.moveFigure(this.spaces, el, offset)
       
-    
-       
-     
-         
-    })
-    
+      this.counter = this.counter + 1;
+
+        
+        
+        const figure = new Figure('zet'+this.counter);
+        const prom =  figure.drawFigure()
+        prom.then(value => {
+          
+          this.moveFigures();
+        })
+      
   }
 }
 

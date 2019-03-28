@@ -2,31 +2,38 @@ class Figure{
   constructor(id){
     this.x = 80;
     this.y = 80;
+    this.isReady = false;
     this.id = id;
   }
-  moveFigure(spaces, el, offset) {
+  // moveFigure(spaces, el, offset) {
+  //   console.log(el);
+  //   const counter =0;
     
-    setInterval(()=>{
-       
-      const correspondingSpace = spaces.find((space)=>{
-        return space.x === el.x.animVal.value && space.y === el.y.animVal.value
-      })
-         
-      if(correspondingSpace && correspondingSpace.row<=17 && correspondingSpace.isAvailable === true){
-       
-        el.setAttribute('y', offset);
-       offset = offset + 30;
-      }
-     },500)
-  }
-  drawFigure(spaces) {
-      const space = spaces.find((space)=>{
-        
-        return space.column===1 && space.row===1
-      });
+  async drawFigure() {
+     
+
+      
+      let offset = 80;
       const figure = new Space(1,1,this.x,this.y,this.id);
       figure.drawSpace('red');
-      return figure
+      let el = document.getElementById(this.id);
+
+      const prom = new Promise(function(resolve, reject) {
+        setInterval(()=>{
+          if (offset<600){
+           el.setAttribute('y', offset);
+           offset = offset + 30;
+           //resolve(false);
+          } else {
+
+            resolve(true);
+           
+          }
+        
+        },500)
+      });
+
+    return prom
       // let counter= 1000;
       // spaces.forEach((space) => {
       // setInterval(()=>{    
