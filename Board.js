@@ -31,11 +31,18 @@ class Board {
     this.counter = this.counter + 1;
     const figure = new Figure('zet'+this.counter);
     figure.drawFigure();
-    const prom =  figure.moveFigure();
+    const prom =  figure.moveFigure(this.spaces);
 
-    prom.then(() => {      
-      this.moveFigures();
+    prom.then((value) => { 
+      this.spaces = value;     
+      this.moveFigures(value);
     });
+
+    this.spaces.forEach((sp)=>{
+      if(!sp.isAvailable){
+        
+      }
+    })
   }
 }
 
