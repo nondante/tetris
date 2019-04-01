@@ -5,17 +5,50 @@ class Figure{
     this.id = id;
   }
 
-  moveFigure() {
-    let offset = 80;
-    let el = document.getElementById(this.id);
-
-    const prom = new Promise(function(resolve) {
-      setInterval(()=>{
-        if (offset<600){
-         el.setAttribute('y', offset);
-         offset = offset + 30;
+  moveFigure(spaces) {
+    
+    
+    let spacess = spaces;
+    const prom = new Promise((resolve)=> {
+      let el = document.getElementById(this.id);
+      let offset = 110;
+      
+      let s = setInterval(()=>{
+        let space = spacess.find((s)=>{
+          return s.y === el.y.animVal.value && s.x === el.x.animVal.value
+        })
+        console.log(space.isAvailable, space.id)
+        if (offset<600&&space.isAvailable===true){
+            let nextspace = spacess.find((s)=>{
+              return s.y === el.y.animVal.value+30 && s.x === el.x.animVal.value
+            })
+            if(nextspace.isAvailable){
+              offset = offset + 30;
+              el.setAttribute('y', offset-30);
+            }else {
+              spacess.forEach((sp)=>{
+                if(sp.y === el.y.animVal.value && sp.x === el.x.animVal.value){
+                  sp.isAvailable = false
+                }
+              })
+              clearInterval(s);
+              resolve(spacess);
+            }
+            
+         
+         
         } else {
-          resolve();
+          space.isAvailable === false
+          space = null
+          offset = 80;
+          
+          spacess.forEach((sp)=>{
+            if(sp.y === el.y.animVal.value && sp.x === el.x.animVal.value){
+              sp.isAvailable = false
+            }
+          })
+          clearInterval(s);
+          resolve(spacess);
         }
       },500)
     });
