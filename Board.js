@@ -19,7 +19,7 @@ class Board {
       for(j=1;j<=this.rows; j++){     
         startingHeight +=30;
         const space = new Space(j,i, startingWidth,startingHeight);
-        space.drawSpace('black');
+        space.drawSpace('black',startingWidth,startingHeight);
         space.setAvailability(true);
         this.spaces.push(space);
       }
@@ -42,7 +42,7 @@ class Board {
     let id = 'zet'+this.counter
     
     const figure = new Figure(id);
-    figure.drawFigure();
+    figure.drawZet();
     
     
     const prom =  figure.moveFigure(id, this.getSpaces());
