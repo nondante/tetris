@@ -3,16 +3,59 @@ class Figure{
     this.x = 80;
     this.y = 80;
     this.id = id;
+    this.element = {};
   }
 
-  moveFigure(spaces) {
+  move(spaces) {
+
+    let el = document.getElementById(this.id);
+    this.element = el;
+
+    let x;
+    let y;
+
+    document.addEventListener('keydown',(e)=>{
     
+    if(e.keyCode===39){
+      if(this.element){
+        x = this.element.x.animVal.value
+        y = this.element.y.animVal.value
+        let space = spaces.find((s)=>{
+          return s.x === x+30 && s.y === y
+        })
+        
+        if(space&&space.isAvailable){
+          this.element.setAttribute('x', x + 30);
+        }
+      }
+    } else if(e.keyCode===37){
+      if(this.element){
+        x = this.element.x.animVal.value
+        y = this.element.y.animVal.value
+        let space = spaces.find((s)=>{
+          return s.x === x-30 && s.y === y
+        })
+        
+        if(space&&space.isAvailable){
+          this.element.setAttribute('x', x - 30);
+        }
+      }
+    } 
+  })
+    this.id = null;
+  }
+  
+  moveFigure(id,spaces) {
+    let el = document.getElementById(this.id);
+    this.move(spaces)
     const prom = new Promise((resolve)=> {
-      let el = document.getElementById(this.id);
+      
+      
       let offset = 110;
       
+      
       let s = setInterval(()=>{
-
+       
         let nextspace = spaces.find((s)=>{
           return s.y === el.y.animVal.value+30 && s.x === el.x.animVal.value
         })
@@ -31,6 +74,8 @@ class Figure{
               sp.isAvailable = false
             }
           })
+          this.id = null;
+          this.element = null;
           clearInterval(s);
           resolve(spaces);
         }

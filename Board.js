@@ -26,23 +26,34 @@ class Board {
     }
   }
 
+  setSpaces(spaces){
+    this.spaces = spaces;
+  }
+
+  getSpaces(){
+    return this.spaces
+  }
+
+  
+
   moveFigures() {
     
     this.counter = this.counter + 1;
-    const figure = new Figure('zet'+this.counter);
+    let id = 'zet'+this.counter
+    
+    const figure = new Figure(id);
     figure.drawFigure();
-    const prom =  figure.moveFigure(this.spaces);
+    
+    
+    const prom =  figure.moveFigure(id, this.getSpaces());
 
     prom.then((value) => { 
-      this.spaces = value;     
+      
+      this.setSpaces(value);     
       this.moveFigures(value);
+      
     });
-
-    this.spaces.forEach((sp)=>{
-      if(!sp.isAvailable){
-        
-      }
-    })
+    
   }
 }
 
